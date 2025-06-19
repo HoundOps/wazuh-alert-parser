@@ -2,8 +2,9 @@ import json
 import csv
 import logging
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
+from collections import Counter, defaultdict
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -50,10 +51,17 @@ def extract_field(data, keys):
     
 if __name__ == "__main__":
     # === File paths ===
+    parse_time = datetime.now()
+    parse_iso = parse_time.strftime("%Y-%m-%d_%H-%M-%S") # for filenames
+
     args = parse_args()
-    log_path = args.logpath or "/var/ossec/logs/alerts/alerts.json"
-    json_output = args.jsonout or "alerts_output.json"
-    csv_output = args.csvout or "alerts_output.csv"
+    log_path    = args.logpath or "/var/ossec/logs/alerts/alerts.json"
+    json_output = args.jsonout or f"alerts_output_{parse_iso}.json"
+    csv_output  = args.csvout  or f"alerts_output_{parse_iso}.csv"
+
+    # summary filename now includes timestamp
+    summary_file = f"summary_report_{parse_iso}.txt"
+    
 
     # === Rule filtering ===
     FILTER_RULES = set(args.rules) if args.rules else {
@@ -122,38 +130,75 @@ if __name__ == "__main__":
             except json.JSONDecodeError:
                 continue  # Skip malformed lines
 
-    # Quick automated rule validation
+     # Quick automated rule validation (you already have this)
     logging.info("\n=== Rule Validation Summary ===")
     matched_rules = set()
     with open(log_path, "r") as f_validate:
         for line in f_validate:
             try:
-                alert = json.loads(line.strip())
-                rule_id = alert.get("rule", {}).get("id", "")
-                if str(rule_id) in FILTER_RULES:
-                    matched_rules.add(str(rule_id))
+                alert_obj = json.loads(line.strip())
+                rid = alert_obj.get("rule", {}).get("id", "")
+                if str(rid) in FILTER_RULES:
+                    matched_rules.add(str(rid))
             except json.JSONDecodeError:
                 continue
 
-    for rule in FILTER_RULES:
-        if rule in matched_rules:
-            logging.info(f" Rule {rule} was triggered.")
-        else:
-            logging.info(f" Rule {rule} not found in alerts.")
+    # === Build counters with descriptions ===
+    rule_counter = defaultdict(lambda: {"description": "", "count": 0})
+    mitre_counter = Counter(a["mitre"] for a in alerts)
+
+    for a in alerts:
+        rid = a["rule_id"]
+        rule_counter[rid]["description"] = a["description"]
+        rule_counter[rid]["count"] += 1
+
+    # === Log the breakdown by Rule ID ===
+    logging.info("\n=== Alert Rule Frequency Summary ===")
+    for rid, info in sorted(rule_counter.items(), key=lambda x: int(x[0])):
+        logging.info(f" Rule {rid} – {info['description']} ({info['count']} alerts)")
+
+    # === MITRE Technique Summary ===
+    logging.info("\n=== MITRE Technique Summary ===")
+    for mitre, count in mitre_counter.items():
+        logging.info(f" {mitre}: {count} alerts")
+
+    # === Write summary to report file ===
+    with open(summary_file, "w") as report:
+        report.write(f"Parse Time: {parse_time.isoformat()}\n")
+        report.write(f"Total Alerts Processed: {len(alerts)}\n\n")
+
+        report.write("=== Alert Rule Frequency Summary ===\n")
+        for rid, info in sorted(rule_counter.items(), key=lambda x: int(x[0])):
+            report.write(f"Rule {rid} – {info['description']} ({info['count']} alerts)\n")
+
+        report.write("\n=== MITRE Technique Summary ===\n")
+        for mitre, count in mitre_counter.items():
+            report.write(f"{mitre}: {count} alerts\n")
+
+    logging.info(f"Wrote {summary_file}")
 
     # === Export to JSON ===
     if alerts:
-        with open(json_output, "w") as json_file:
-            json.dump(alerts, json_file, indent=2)
+        with open(json_output, "w", encoding="utf-8") as json_file:
+            json.dump({
+                "parse_time": parse_time.isoformat(),
+                "total_alerts": len(alerts),
+                "filtered_rules": list(FILTER_RULES),
+                "alerts": alerts
+            }, json_file, indent=2)
     else:
         logging.info("No matching alerts to export to JSON.")
 
     # === Export to CSV ===
     if alerts:
-        with open(csv_output, "w", newline='') as csv_file:
-            writer = csv.DictWriter(csv_file, fieldnames=alerts[0].keys())
+        # extend fieldnames with parse_time
+        fieldnames = list(alerts[0].keys()) + ["parse_time"]
+        with open(csv_output, "w", newline='', encoding="utf-8") as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
             writer.writeheader()
-            writer.writerows(alerts)
+            for a in alerts:
+                a["parse_time"] = parse_time.isoformat()
+                writer.writerow(a)
     else:
         logging.info("No matching alerts to export.")
 
