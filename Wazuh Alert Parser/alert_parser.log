@@ -1,0 +1,44 @@
+2025-06-19 12:45:49,297 - INFO - [2025-06-16T10:00:00Z] Rule 60107 – Unauthorized PowerShell usage
+2025-06-19 12:45:49,297 - INFO -    Source IP: 192.168.1.100
+2025-06-19 12:45:49,297 - INFO -    Process: powershell.exe | Parent: cmd.exe
+2025-06-19 12:45:49,298 - INFO -    MITRE Technique: PowerShell
+2025-06-19 12:45:49,298 - INFO - ------------------------------------------------------------
+2025-06-19 12:45:49,298 - INFO - [2025-06-16T10:10:00Z] Rule 61601 – WMI Execution
+2025-06-19 12:45:49,298 - INFO -    Source IP: 192.168.1.105
+2025-06-19 12:45:49,299 - INFO -    Process: wmiprvse.exe | Parent: svchost.exe
+2025-06-19 12:45:49,299 - INFO -    MITRE Technique: WMI
+2025-06-19 12:45:49,299 - INFO - ------------------------------------------------------------
+2025-06-19 12:45:49,299 - INFO - 
+=== Rule Validation Summary ===
+2025-06-19 12:45:49,300 - INFO -  Rule 67027 not found in alerts.
+2025-06-19 12:45:49,300 - INFO -  Rule 60106 not found in alerts.
+2025-06-19 12:45:49,300 - INFO -  Rule 61601 was triggered.
+2025-06-19 12:45:49,300 - INFO -  Rule 61603 not found in alerts.
+2025-06-19 12:45:49,300 - INFO -  Rule 530 not found in alerts.
+2025-06-19 12:45:49,300 - INFO -  Rule 60107 was triggered.
+2025-06-19 12:45:49,300 - INFO -  Rule 18107 not found in alerts.
+2025-06-19 12:45:49,301 - INFO -  Rule 533 not found in alerts.
+2025-06-19 12:45:49,301 - INFO - 
+ Exported 2 alerts to alerts_output.json and alerts_output.csv
+2025-06-19 12:55:50,282 - INFO - [2025-06-16T10:00:00Z] Rule 60107 – Unauthorized PowerShell usage
+2025-06-19 12:55:50,282 - INFO -    Source IP: 192.168.1.100
+2025-06-19 12:55:50,283 - INFO -    Process: powershell.exe | Parent: cmd.exe
+2025-06-19 12:55:50,283 - INFO -    MITRE Technique: PowerShell
+2025-06-19 12:55:50,283 - INFO - ------------------------------------------------------------
+2025-06-19 12:55:50,283 - INFO - [2025-06-16T10:10:00Z] Rule 61601 – WMI Execution
+2025-06-19 12:55:50,283 - INFO -    Source IP: 192.168.1.105
+2025-06-19 12:55:50,284 - INFO -    Process: wmiprvse.exe | Parent: svchost.exe
+2025-06-19 12:55:50,284 - INFO -    MITRE Technique: WMI
+2025-06-19 12:55:50,284 - INFO - ------------------------------------------------------------
+2025-06-19 12:55:50,284 - INFO - 
+=== Rule Validation Summary ===
+2025-06-19 12:55:50,284 - INFO -  Rule 533 not found in alerts.
+2025-06-19 12:55:50,285 - INFO -  Rule 60107 was triggered.
+2025-06-19 12:55:50,285 - INFO -  Rule 61603 not found in alerts.
+2025-06-19 12:55:50,285 - INFO -  Rule 67027 not found in alerts.
+2025-06-19 12:55:50,285 - INFO -  Rule 61601 was triggered.
+2025-06-19 12:55:50,285 - INFO -  Rule 60106 not found in alerts.
+2025-06-19 12:55:50,285 - INFO -  Rule 18107 not found in alerts.
+2025-06-19 12:55:50,285 - INFO -  Rule 530 not found in alerts.
+2025-06-19 12:55:50,286 - INFO - 
+ Exported 2 alerts to alerts_output.json and alerts_output.csv

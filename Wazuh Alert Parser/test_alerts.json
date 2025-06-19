@@ -1,0 +1,3 @@
+{"timestamp":"2025-06-16T10:00:00Z","rule":{"id":"60107","description":"Unauthorized PowerShell usage","mitre":{"id":"T1059.001"}},"data":{"srcip":"192.168.1.100","win":{"eventdata":{"image":"powershell.exe","parentImage":"cmd.exe"}}}}
+{"timestamp":"2025-06-16T10:05:00Z","rule":{"id":"99999","description":"Unimportant noise"},"data":{"srcip":"10.0.0.1"}}
+{"timestamp":"2025-06-16T10:10:00Z","rule":{"id":"61601","description":"WMI Execution","mitre":{"id":"T1047"}},"data":{"src_ip":"192.168.1.105","win":{"system":{"process":{"name":"wmiprvse.exe"},"parent_process":{"name":"svchost.exe"}}}}}

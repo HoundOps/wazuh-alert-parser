@@ -1,0 +1,3 @@
+timestamp,rule_id,description,source_ip,process,parent_process,mitre
+2025-06-16T10:00:00Z,60107,Unauthorized PowerShell usage,192.168.1.100,powershell.exe,cmd.exe,PowerShell
+2025-06-16T10:10:00Z,61601,WMI Execution,192.168.1.105,wmiprvse.exe,svchost.exe,WMI
