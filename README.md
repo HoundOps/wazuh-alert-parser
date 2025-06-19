@@ -1,60 +1,78 @@
 🔍 Wazuh Alert Parser & Exporter
 
-A lightweight Python script that parses `alerts.json` files from a Wazuh server, filters by specific rule IDs, maps MITRE techniques, and exports selected alert data to both JSON and CSV.  
+# Wazuh Alert Parser & Exporter
 
-Designed for SOC analysts, blue teamers, or cybersecurity learners who want clearer, cleaner access to relevant alert data.
+A lightweight Python tool for SOC analysts to parse Wazuh’s  
+`alerts.json`, filter by rule ID, enrich with MITRE ATT&CK mapping,  
+and export clean, shareable data in JSON, CSV, and text-summary formats.
 
-⚙️ Features
-- ✅ Rule ID filtering (customizable via CLI)
-- ✅ MITRE ATT&CK technique mapping
-- ✅ Source IP, process, and parent process extraction
-- ✅ Terminal-friendly colored output
-- ✅ Clean logging to `alert_parser.log`
-- ✅ Export to JSON and CSV
-- ✅ Optional command-line arguments
+---
+
+## 🚀 Features
+
+- **Rule ID filtering** (configurable via CLI)  
+- **MITRE technique mapping** → human-readable names  
+- **Source IP**, **Process** & **Parent Process** extraction  
+- **Timestamped** export filenames for traceability  
+- **CLI** + **ANSI-colored** terminal output  
+- **Clean logging** to `alert_parser.log`  
+- **Exports**:  
+  - JSON (`alerts_output_<stamp>.json`)  
+  - CSV (`alerts_output_<stamp>.csv`)  
+  - Text summary (`summary_report_<stamp>.txt`)
+
+---
 
 🚀 How to Use
 1. Requirements
 
 - Python 3.7+
 - No external packages required (only standard library)
+
 2. Example Usage
+python alert_parser.py [--logpath PATH] [--jsonout FILE] [--csvout FILE] [--rules ID [ID...]]
+
+Examples
+Default run (reads /var/ossec/logs/alerts/alerts.json):
+
 python alert_parser.py
-This runs the script with default settings:
-Input file: /var/ossec/logs/alerts/alerts.json
-Output files: alerts_output.json and alerts_output.csv
-Rule IDs filtered: 60107, 60106, 61601, 61603, 67027, 530, 533, 18107
+Custom inputs & outputs:
 
-3. Custom Options
 python alert_parser.py \
-  --logpath test_alerts.json \
-  --jsonout output.json \
-  --csvout output.csv \
-  --rules 60107 61601
+  --logpath ./test_alerts.json \
+  --jsonout report.json \
+  --csvout report.csv \
+  --rules 60107 61601 530
 
-CLI Arguments
-Option
-Description
-Example
---logpath
-Path to the alerts.json file
-/var/ossec/logs/alerts/alerts.json
---jsonout
-Path to save the parsed JSON output
-alerts_output.json
---csvout
-Path to save the parsed CSV output
-alerts_output.csv
---rules
-Space-separated rule IDs to filter
-60107 61601 533
+🛠️ CLI Options
+Flag	Description	Default
+--logpath	| Path to the Wazuh alerts.json file |	/var/ossec/logs/alerts/alerts.json
+--jsonout	| Output JSON filename (includes timestamp) |	alerts_output_<YYYYMMDD_HHMMSS>.json
+--csvout	| Output CSV filename (includes timestamp) | alerts_output_<YYYYMMDD_HHMMSS>.csv
+--rules	| Space-separated list of rule IDs to include; overrides default filter set |	60107 60106 61601 61603 67027 530 533 18107
 
-📂 Output
-Colored terminal output: Only for matched rule alerts
-Log file: alert_parser.log
-Exports:
-alerts_output.json: Full filtered alerts
-alerts_output.csv: Tabular alert summary
+📂 Output Files
+alerts_output_<stamp>.json
+
+alerts_output_<stamp>.csv
+Columns: timestamp,rule_id,description,source_ip,process,parent_process,mitre,parse_time
+
+summary_report_<stamp>.txt
+
+text
+Copy
+Edit
+Parse Time: 2025-06-19T14:30:09-04:00
+Total Alerts Processed: 1234
+
+=== Alert Rule Frequency Summary ===
+Rule 60107 – Unauthorized PowerShell usage (432 alerts)
+Rule 61601 – WMI Execution (310 alerts)
+…
+
+=== MITRE Technique Summary ===
+PowerShell: 432 alerts
+WMI:        310 alerts
 
 🧠 MITRE Mapping
 Some alerts include rule.mitre.id, which is mapped to friendly descriptions like:
