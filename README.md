@@ -12,7 +12,7 @@ Manual alert review in Wazuh is slow when you're dealing with high-volume logs. 
 
 ---
 
-## ⚙️ Features
+## ✅ Features
 
 - **Rule ID filtering** (configurable via CLI)
 - **MITRE technique mapping** → human-readable names
@@ -98,16 +98,18 @@ sudo python3 alert_parser.py \
 **CSV** — one row per alert including parse_time column
 
 **Summary report** — human-readable breakdown:
+```
 Parse Time: 2026-04-07T18:39:57
 Total Alerts Processed: 68
+
 === Alert Rule Frequency Summary ===
 Rule 533 – Listened ports status changed (7 alerts)
 Rule 60106 – Windows Logon Success (61 alerts)
+
 === MITRE Technique Summary ===
 N/A: 7 alerts
 T1078: 61 alerts
-
----
+```
 
 ## 🧠 MITRE Mapping
 
