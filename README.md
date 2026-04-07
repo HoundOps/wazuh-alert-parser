@@ -30,13 +30,13 @@ Manual alert review in Wazuh is slow when you're dealing with high-volume logs. 
 ## 📸 Screenshots
 
 ### Terminal Output
-![Terminal Output](Terminal%20Output.png)
+![Terminal Output](/Wazuh%20Alert%20Parser/screenshots/Terminal%20Output.png)
 
 ### Output Files Created
-![ls -la](ls-la.png)
+![ls -la](/Wazuh%20Alert%20Parser/screenshots/ls-la.png)
 
 ### Summary Report
-![Summary Report](Summary%20Report.png)
+![Summary Report](/Wazuh%20Alert%20Parser/screenshots/Summary%20Report.png)
 
 ---
 
