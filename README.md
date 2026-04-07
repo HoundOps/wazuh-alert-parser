@@ -2,13 +2,19 @@
 
 # Wazuh Alert Parser & Exporter
 
+
 A lightweight Python tool for SOC analysts to parse Wazuh’s  
 `alerts.json`, filter by rule ID, enrich with MITRE ATT&CK mapping,  
 and export clean, shareable data in JSON, CSV, and text-summary formats.
 
 ---
 
-## 🚀 Features
+## Why I Built This
+Manual alert review in Wazuh is slow when you're dealing with high-volume logs. This tool cuts triage time by filtering noise, mapping MITRE techniques automatically, and exporting clean data an analyst can actually work with.
+
+---
+
+### 🚀 Features
 
 - **Rule ID filtering** (configurable via CLI)  
 - **MITRE technique mapping** → human-readable names  
@@ -99,7 +105,7 @@ Run: python alert_parser.py --logpath test_alerts.json
    MITRE Technique: PowerShell
 
 🛠 Author Notes
-This script was built as a real-world SOC side project to demonstrate Python scripting, log analysis, and detection tuning.
+Built to solve a real triage problem, parsing and normalizing 10,000+ Wazuh alerts in under 5 seconds to reduce manual analyst review time.
 
 📜 License
 MIT — free to use, modify, and adapt.
