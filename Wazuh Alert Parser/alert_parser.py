@@ -103,6 +103,8 @@ if __name__ == "__main__":
                 process = extract_field(alert, ["data.win.eventdata.image", "data.win.system.process.name"])
                 parent = extract_field(alert, ["data.win.eventdata.parentImage", "data.win.system.parent_process.name"])
                 mitre_ids = extract_field(alert, ["rule.mitre.id"])
+                if isinstance(mitre_ids, list):
+                    mitre_ids = mitre_ids[0] if mitre_ids else "N/A"
                 mitre_desc = mitre_mapping.get(mitre_ids, mitre_ids)
 
                 # Print to console
