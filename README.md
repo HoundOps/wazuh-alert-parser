@@ -2,6 +2,7 @@
 
 # Wazuh Alert Parser & Exporter
 
+Built to solve a real triage problem, parsing and normalizing 10,000+ Wazuh alerts in under 5 seconds to reduce manual analyst review time.
 
 A lightweight Python tool for SOC analysts to parse Wazuh’s  
 `alerts.json`, filter by rule ID, enrich with MITRE ATT&CK mapping,  
@@ -29,7 +30,7 @@ Manual alert review in Wazuh is slow when you're dealing with high-volume logs. 
 
 ---
 
-🚀 How to Use
+⚙️ How to Use
 1. Requirements
 
 - Python 3.7+
@@ -103,9 +104,6 @@ Run: python alert_parser.py --logpath test_alerts.json
    Source IP: 192.168.1.100
    Process: powershell.exe | Parent: cmd.exe
    MITRE Technique: PowerShell
-
-🛠 Author Notes
-Built to solve a real triage problem, parsing and normalizing 10,000+ Wazuh alerts in under 5 seconds to reduce manual analyst review time.
 
 📜 License
 MIT — free to use, modify, and adapt.
