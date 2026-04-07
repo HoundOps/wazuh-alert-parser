@@ -52,6 +52,7 @@ Manual alert review in Wazuh is slow when you're dealing with high-volume logs. 
 ```bash
 git clone https://github.com/HoundOps/wazuh-alert-parser.git
 cd wazuh-alert-parser
+cd 'Wazuh Alert Parser'
 ```
 
 ### 3. Default run
